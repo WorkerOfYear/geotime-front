@@ -8,8 +8,8 @@ type Props = {
 const HeadTable = ({ className }: Props) => {
   const tableHeader = [
     "Время",
-    "Глубина, мм",
-    "Проходка, мм",
+    "Глубина, м",
+    "Проходка, м",
     "Диам.скв, мм",
     <span>Объём план, <br/>м<sup>3</sup></span>,
     <span>Расход факт, м<sup>3</sup>/с</span>,

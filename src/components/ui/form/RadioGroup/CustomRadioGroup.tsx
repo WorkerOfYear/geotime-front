@@ -23,7 +23,7 @@ function CustomRadioGroup({ value, handleChange }: Props) {
               <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
             </RadioGroup.Item>
             <label className={styles.Label} htmlFor="r1">
-              Cтадартно
+              Стандартно
             </label>
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
