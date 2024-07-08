@@ -18,7 +18,7 @@ const Result = ({ report }: ResultProps) => {
               <div className={styles.bodyRow}>
                 <div className={styles.item}>{formatDate(report.time)}</div>
                 <div className={styles.item}>{report.depth}</div>
-                <div className={styles.item}>{report.lag_depth}</div>
+                <div className={styles.item}>{report.sinking}</div>
                 <div className={styles.item}>{report.well_diam}</div>
                 <div className={styles.item}>{report.cut_plan_volume}</div>
                 <div className={styles.item}>{chooseFactVolumeDelta(4, report)}</div>

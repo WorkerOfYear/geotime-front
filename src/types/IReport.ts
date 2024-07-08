@@ -5,6 +5,7 @@ export interface IReport {
   depth: string;
   lag_depth: string;
   well_diam: string;
+  sinking: string;
   cut_plan_volume: string;
   cut_plan_volume_with_out_well: string;
   cut_plan_volume_in_well: string;

@@ -46,7 +46,7 @@ const Tables: React.FC<TablesProps> = ({ id, reports, cameraUrl, showStream, cla
             <div className={styles.bodyRow} key={index}>
               <div className={styles.item}>{formatDate(item.created_at ? item.created_at : item.time)}</div>
               <div className={styles.item}>{item.depth}</div>
-              <div className={styles.item}>{item.lag_depth}</div>
+              <div className={styles.item}>{item.sinking}</div>
               <div className={styles.item}>{item.well_diam}</div>
               <div className={styles.item}>{item.cut_plan_volume}</div>
               <div className={styles.item}>{chooseFactVolumeDelta(id, item)}</div>
