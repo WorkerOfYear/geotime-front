@@ -1,0 +1,24 @@
+@import "sass-rem";
+
+.btn {
+  border-radius: rem(4px);
+  padding: rem(15px) rem(26px);
+  color: var(--primary);
+  font-size: rem(17px);
+  font-weight: 500;
+  line-height: 1.1em;
+  border: rem(2px) solid var(--primary);
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    user-select: none;
+    background-color: #cdd6e5;
+    color: #8594ae;
+    border-color: #8594ae;
+  }
+
+  &:hover:enabled {
+    background-color: var(--primary);
+    color: white;
+  }
+}
