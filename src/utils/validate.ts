@@ -34,3 +34,39 @@ function validateDetection(detection: any): detection is IDetection {
 function validateCoords(coords: any): coords is ICoords {
   return typeof coords === "object" && typeof coords.x === "string" && typeof coords.y === "string";
 }
+
+
+const isValidCoords = (coords: unknown): coords is ICoords => {
+  if (typeof coords !== 'object' || coords === null) {
+    return false;
+  }
+
+  const coordinates = coords as ICoords;
+  return typeof coordinates.x === 'string' && typeof coordinates.y === 'string';
+};
+
+
+export const isValidCamera = (obj: unknown): obj is ICamera => {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const camera = obj as ICamera;
+
+  return (
+    (camera.id === null || typeof camera.id === 'string') &&
+    Array.isArray(camera.type) &&
+    camera.type.every((type) => type === 'calibration' || type === 'streaming') &&
+    typeof camera.data === 'object' &&
+    camera.data !== null &&
+    typeof camera.data.url === 'string' &&
+    typeof camera.data.volume === 'string' &&
+    typeof camera.data.sensitivity === 'string' &&
+    typeof camera.detection === 'object' &&
+    camera.detection !== null &&
+    isValidCoords(camera.detection.A) &&
+    isValidCoords(camera.detection.B) &&
+    isValidCoords(camera.detection.C) &&
+    isValidCoords(camera.detection.D)
+  );
+};

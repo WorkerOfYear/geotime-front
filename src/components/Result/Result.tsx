@@ -21,6 +21,7 @@ const Result = ({ report }: ResultProps) => {
                 <div className={styles.item}>{report.sinking}</div>
                 <div className={styles.item}>{report.well_diam}</div>
                 <div className={styles.item}>{report.cut_plan_volume}</div>
+                <div className={styles.item}>{report.cut_plan_volume_in_well}</div>
                 <div className={styles.item}>{chooseFactVolumeDelta(4, report)}</div>
                 <div className={styles.item}>{report.cut_fact_volume}</div>
                 <div className={styles.item}>{report.cleaning_factor}</div>

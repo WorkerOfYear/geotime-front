@@ -15,7 +15,9 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <Header />
-      <HeadTable />
+      <div style={{display: "flex", justifyContent: 'center'}}>
+        <HeadTable />
+      </div>
       <div className="home__table">
         {jobReducer.job.camera1_is_active && (
           <WithCameraStreamTable id={1} cameraUrl={cameraReducer.camera1.data.url} showStream={true} />

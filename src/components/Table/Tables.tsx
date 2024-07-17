@@ -49,6 +49,7 @@ const Tables: React.FC<TablesProps> = ({ id, reports, cameraUrl, showStream, cla
               <div className={styles.item}>{item.sinking}</div>
               <div className={styles.item}>{item.well_diam}</div>
               <div className={styles.item}>{item.cut_plan_volume}</div>
+              <div className={styles.item}>{item.cut_plan_volume_in_well}</div>
               <div className={styles.item}>{chooseFactVolumeDelta(id, item)}</div>
               <div className={styles.item}>{chooseFactVolume(id, item)}</div>
               <div className={styles.item}>{item.cleaning_factor}</div>
