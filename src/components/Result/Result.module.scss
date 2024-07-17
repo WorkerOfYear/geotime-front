@@ -40,10 +40,9 @@
 }
 
 .bodyRow {
-  max-width: rem(760px);
   margin-left: auto;
   display: grid;
-  grid-template-columns: rem(165px) rem(93px) rem(93px) rem(80px) rem(80px) rem(80px) rem(80px) rem(80px);
+  grid-template-columns: rem(165px) rem(93px) rem(93px) rem(80px) rem(80px) rem(80px) rem(80px) rem(80px) rem(80px);
   gap: rem(4px);
 
 }
