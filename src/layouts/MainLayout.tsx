@@ -7,6 +7,7 @@ import { witsSlice } from "../store/reducers/WitsSlice";
 import { closeSockets, witsSocket } from "../services/ReportService";
 import { isValidCamera } from "../utils/validate";
 import { cameraSlice } from "../store/reducers/CameraSlice";
+import { jobSlice } from "../store/reducers/JobSlice";
 
 type Props = {
   children?: ReactNode;
@@ -82,10 +83,13 @@ const MainLayout = ({ children }: Props) => {
             console.log(parsedItem);
             if (key === "camera1") {
               dispatch(cameraSlice.actions.setCamera1(parsedItem));
+              dispatch(jobSlice.actions.setCamera1Id(parsedItem.id))
             } else if (key === "camera2") {
               dispatch(cameraSlice.actions.setCamera2(parsedItem));
+              dispatch(jobSlice.actions.setCamera2Id(parsedItem.id))
             } else if (key === "camera3") {
               dispatch(cameraSlice.actions.setCamera3(parsedItem));
+              dispatch(jobSlice.actions.setCamera3Id(parsedItem.id))
             }
           } else {
             console.log(`Key ${key} is invalid, removing from localStorage.`);
