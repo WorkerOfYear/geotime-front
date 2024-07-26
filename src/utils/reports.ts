@@ -29,12 +29,12 @@ export function chooseFactVolume(id: number, item: IReport) {
 
 export function chooseFactVolumeDelta(id: number, item: IReport) {
   if (id === 1) {
-    return item.сut_fact_volume_delta_1;
+    return item.cut_fact_volume_delta_1;
   } else if (id === 2) {
-    return item.сut_fact_volume_delta_2;
+    return item.cut_fact_volume_delta_2;
   } else if (id === 3) {
-    return item.сut_fact_volume_delta_3;
+    return item.cut_fact_volume_delta_3;
   } else if (id === 4) {
-    return item.сut_fact_volume_delta_1 + item.сut_fact_volume_delta_2 + item.сut_fact_volume_delta_3;
+    return item.cut_fact_volume_delta_1 + item.cut_fact_volume_delta_2 + item.cut_fact_volume_delta_3;
   }
 }
