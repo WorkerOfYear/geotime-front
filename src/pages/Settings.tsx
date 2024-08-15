@@ -91,7 +91,7 @@ const Settings = () => {
           label={"Порт источника WITS"}
           placeholder={"12001"}
         />
-        <button onClick={handleCheckWits} style={{ position: "absolute", left: 500 }} className="button button--accent">
+        <button onClick={handleCheckWits} style={{ position: "absolute", left: 530 }} className="button button--accent">
           {(!witsSocket || witsSocket.readyState === witsSocket.CLOSED) ? "Начать проверку" : "Остановить проверку"}
         </button>
       </div>
