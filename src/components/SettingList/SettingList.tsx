@@ -4,7 +4,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 import styles from "./SettingList.module.scss";
 import { useAppSelector } from "../../hooks/redux";
-import { reportApi } from "../../services/ReportService";
+import { reportApi, witsSocket } from "../../services/ReportService";
 import { useNavigate } from "react-router-dom";
 
 interface SettingListProps {
@@ -15,14 +15,16 @@ const SettingList: React.FC<SettingListProps> = ({ onSubmit }) => {
   const navigate = useNavigate();
   const stream = useAppSelector((state) => state.witsReducer.stream);
 
-  const { data: witsData, isLoading } = reportApi.useGetWitsMessagesQuery(null, { skip: !stream });
+  const { data: witsData } = reportApi.useGetWitsMessagesQuery(null, { skip: !stream });
 
   return (
     <div className={styles.list}>
       <div className={clsx("label", styles.list__label)}>Монитор входящего потока WITS</div>
       <div className={styles.list__body}>
         <ul>
-          {isLoading ? <li className={styles.item}>Загрузка..</li> : null}
+          {!witsSocket || witsSocket.readyState === witsSocket.CLOSED ? (
+            <li className={styles.item}>Соединение закрыто</li>
+          ) : null}
           {witsData ? (
             <>
               {witsData.map((item, index) => (
@@ -31,9 +33,7 @@ const SettingList: React.FC<SettingListProps> = ({ onSubmit }) => {
                 </li>
               ))}
             </>
-          ) : (
-            <li className={styles.item}>No data...</li>
-          )}
+          ) : null}
         </ul>
       </div>
       <div className={styles.list__bottom}>
