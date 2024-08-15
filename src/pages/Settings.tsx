@@ -8,7 +8,6 @@ import { setWits } from "../store/reducers/actions/ActionCreators";
 import { IWits } from "../types/IWits";
 import { reportApi, witsSocket } from "../services/ReportService";
 
-
 const Settings = () => {
   const [witsSettings, setWitsSettings] = useState<IWits>({
     host: "",
@@ -18,14 +17,14 @@ const Settings = () => {
     well_diam: "",
   });
 
-  const [checkWits, setCheckWits] = useState<boolean>(false)
+  const [checkWits, setCheckWits] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-  const witsReducer = useAppSelector((state) => state.witsReducer);
+  const data = useAppSelector((state) => state.witsReducer.data);
 
   useEffect(() => {
-    setWitsSettings(witsReducer.data);
-  }, [witsReducer]);
+    setWitsSettings(data);
+  }, [data]);
 
   const handleHostOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     setWitsSettings({ ...witsSettings, host: e.currentTarget.value });
@@ -56,23 +55,30 @@ const Settings = () => {
   };
 
   const handleCheckWits = () => {
-    setCheckWits(!checkWits)
-    if (!checkWits) {
+    // setCheckWits(!checkWits);
+    if (!witsSocket || witsSocket.readyState === witsSocket.CLOSED) {
+      console.log("Open wits ws")
       dispatch(reportApi.util.resetApiState());
-      dispatch(witsSlice.actions.setStream(true))
+      dispatch(witsSlice.actions.setStream(true));
     } else {
-      console.log(witsSocket)
-      if (witsSocket) {
-        console.log(witsSocket.readyState)
-        witsSocket.close()
-        console.log(witsSocket.readyState)
-      }
+      console.log("Close wits ws")
+      witsSocket.close();
     }
-  }
+
+
+    // if (!checkWits) {
+    //   dispatch(reportApi.util.resetApiState());
+    //   dispatch(witsSlice.actions.setStream(true));
+    // } else {
+    //   if (witsSocket) {
+    //     witsSocket.close();
+    //   }
+    // }
+  };
 
   return (
-    <div className={"settings"}>
-      <div className="settings__header">
+    <div className={"settings"} style={{width: 700}}>
+      <div className="settings__header" style={{position: "relative"}}>
         <Item
           value={witsSettings.host}
           onChange={handleHostOnChange}
@@ -85,7 +91,9 @@ const Settings = () => {
           label={"Порт источника WITS"}
           placeholder={"12001"}
         />
-        <button onClick={handleCheckWits} className="button button--accent">{checkWits ? 'Остановить проверку' : 'Начать проверку'}</button>
+        <button onClick={handleCheckWits} style={{ position: "absolute", left: 500 }} className="button button--accent">
+          {(!witsSocket || witsSocket.readyState === witsSocket.CLOSED) ? "Начать проверку" : "Остановить проверку"}
+        </button>
       </div>
       <div className="settings__sub-header">
         <div className="setting__sub-item sub-item">
