@@ -92,7 +92,7 @@ const Settings = () => {
           placeholder={"12001"}
         />
         <button onClick={handleCheckWits} style={{ position: "absolute", left: 530 }} className="button button--accent">
-          {(!witsSocket || witsSocket.readyState === witsSocket.CLOSED) ? "Начать проверку" : "Остановить проверку"}
+          {(witsSocket && witsSocket.readyState === witsSocket.OPEN) ? "Остановить проверку" : "Начать проверку"}
         </button>
       </div>
       <div className="settings__sub-header">
