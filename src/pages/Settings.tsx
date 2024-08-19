@@ -17,8 +17,6 @@ const Settings = () => {
     well_diam: "",
   });
 
-  const [checkWits, setCheckWits] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.witsReducer.data);
 
@@ -54,31 +52,42 @@ const Settings = () => {
     });
   };
 
+  const [socketState, setSocketState] = useState(witsSocket ? witsSocket.readyState : WebSocket.CLOSED);
+
+  useEffect(() => {
+    const handleSocketStateChange = () => {
+      setSocketState(witsSocket.readyState);
+    };
+
+    if (witsSocket) {
+      witsSocket.addEventListener("open", handleSocketStateChange);
+      witsSocket.addEventListener("close", handleSocketStateChange);
+      witsSocket.addEventListener("error", handleSocketStateChange);
+    }
+
+    return () => {
+      if (witsSocket) {
+        witsSocket.removeEventListener("open", handleSocketStateChange);
+        witsSocket.removeEventListener("close", handleSocketStateChange);
+        witsSocket.removeEventListener("error", handleSocketStateChange);
+      }
+    };
+  }, [witsSocket]);
+
   const handleCheckWits = () => {
-    // setCheckWits(!checkWits);
-    if (!witsSocket || witsSocket.readyState === witsSocket.CLOSED) {
-      console.log("Open wits ws")
+    if (socketState === WebSocket.CLOSED) {
+      console.log("Open wits ws");
       dispatch(reportApi.util.resetApiState());
       dispatch(witsSlice.actions.setStream(true));
     } else {
-      console.log("Close wits ws")
+      console.log("Close wits ws");
       witsSocket.close();
     }
-
-
-    // if (!checkWits) {
-    //   dispatch(reportApi.util.resetApiState());
-    //   dispatch(witsSlice.actions.setStream(true));
-    // } else {
-    //   if (witsSocket) {
-    //     witsSocket.close();
-    //   }
-    // }
   };
 
   return (
-    <div className={"settings"} style={{width: 700}}>
-      <div className="settings__header" style={{position: "relative"}}>
+    <div className={"settings"} style={{ width: 700 }}>
+      <div className="settings__header" style={{ position: "relative" }}>
         <Item
           value={witsSettings.host}
           onChange={handleHostOnChange}
@@ -91,8 +100,12 @@ const Settings = () => {
           label={"Порт источника WITS"}
           placeholder={"12001"}
         />
-        <button onClick={handleCheckWits} style={{ position: "absolute", left: 530 }} className="button button--accent">
-          {(witsSocket && witsSocket.readyState === witsSocket.OPEN) ? "Остановить проверку" : "Начать проверку"}
+        <button
+          onClick={handleCheckWits}
+          style={{ position: "absolute", left: 530 }}
+          className="button button--accent"
+        >
+          {socketState === WebSocket.OPEN ? "Остановить проверку" : "Начать проверку"}
         </button>
       </div>
       <div className="settings__sub-header">
