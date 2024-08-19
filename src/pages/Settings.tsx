@@ -19,6 +19,7 @@ const Settings = () => {
 
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.witsReducer.data);
+  const stream = useAppSelector((state) => state.witsReducer.stream);
 
   useEffect(() => {
     setWitsSettings(data);
@@ -52,30 +53,8 @@ const Settings = () => {
     });
   };
 
-  const [socketState, setSocketState] = useState(witsSocket ? witsSocket.readyState : WebSocket.CLOSED);
-
-  useEffect(() => {
-    const handleSocketStateChange = () => {
-      setSocketState(witsSocket.readyState);
-    };
-
-    if (witsSocket) {
-      witsSocket.addEventListener("open", handleSocketStateChange);
-      witsSocket.addEventListener("close", handleSocketStateChange);
-      witsSocket.addEventListener("error", handleSocketStateChange);
-    }
-
-    return () => {
-      if (witsSocket) {
-        witsSocket.removeEventListener("open", handleSocketStateChange);
-        witsSocket.removeEventListener("close", handleSocketStateChange);
-        witsSocket.removeEventListener("error", handleSocketStateChange);
-      }
-    };
-  }, [witsSocket]);
-
   const handleCheckWits = () => {
-    if (socketState === WebSocket.CLOSED) {
+    if (witsSocket.readyState === WebSocket.CLOSED) {
       console.log("Open wits ws");
       dispatch(reportApi.util.resetApiState());
       dispatch(witsSlice.actions.setStream(true));
@@ -105,7 +84,7 @@ const Settings = () => {
           style={{ position: "absolute", left: 530 }}
           className="button button--accent"
         >
-          {socketState === WebSocket.OPEN ? "Остановить проверку" : "Начать проверку"}
+          {stream ? "Остановить проверку" : "Начать проверку"}
         </button>
       </div>
       <div className="settings__sub-header">

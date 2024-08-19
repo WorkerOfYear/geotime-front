@@ -4,14 +4,12 @@ import { IWits } from "../../types/IWits";
 interface IInitialWits {
   initialised: boolean;
   stream: boolean;
-  ws: WebSocket | null;
   data: IWits;
 }
 
 const initialState: IInitialWits = {
   initialised: false,
   stream: false,
-  ws: null,
   data: {
     host: "",
     port: "",
@@ -30,9 +28,6 @@ export const witsSlice = createSlice({
     },
     setStream(state, action: PayloadAction<boolean>) {
       state.stream = action.payload;
-    },
-    setWebsocket(state, action: PayloadAction<WebSocket | null | any>) {
-      state.ws = action.payload;
     },
     setWits(state, action: PayloadAction<IWits>) {
       state.data.host = action.payload.host;
