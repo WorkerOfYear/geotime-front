@@ -54,7 +54,8 @@ const Settings = () => {
   };
 
   const handleCheckWits = () => {
-    if (witsSocket && witsSocket.readyState === WebSocket.CLOSED) {
+    console.log(witsSocket)
+    if (!witsSocket || witsSocket.readyState === WebSocket.CLOSED) {
       console.log("Open wits ws");
       dispatch(reportApi.util.resetApiState());
       dispatch(witsSlice.actions.setStream(true));
